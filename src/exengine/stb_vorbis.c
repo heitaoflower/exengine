@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 // Ogg Vorbis audio decoder - v1.14 - public domain
 // http://nothings.org/stb_vorbis/
 //

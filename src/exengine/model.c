@@ -43,7 +43,6 @@ ex_model_t* ex_model_copy(ex_model_t *model)
   for (int i=0; i<EX_MODEL_MAX_MESHES; i++) {
     if (model->meshes[i] != NULL)
       ex_model_add_mesh(m, ex_mesh_copy(model->meshes[i]));
-      break;
   }
 
   // init instancing matrix vbos etc 
@@ -242,7 +241,7 @@ void ex_model_destroy(ex_model_t *m)
 
 void ex_model_update_matrices(ex_model_t *m)
 {
-  mat4x4 transform[m->bones_len];
+  mat4x4 transform[255];
   ex_frame_t pose = m->pose;
 
   for (int i=0; i<m->bones_len; i++) {

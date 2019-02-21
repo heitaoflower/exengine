@@ -69,6 +69,7 @@ ex_font_t* ex_font_load(const char *path, const char *letters)
   char *character = (char*)letters;
   size_t x = 1, y = 1, index = 0;
   while (*character != '\0') {
+	
     char c = *character++;
     float *bitmap = ex_msdf_glyph(&font, ex_utf8(&c), SIZE, SIZE, &metrics);
 

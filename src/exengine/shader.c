@@ -1,10 +1,11 @@
 #include "shader.h"
 #include <string.h>
+#include <inttypes.h>
 
 GLint ex_uniform_map[256][256] = {0};
 GLint ex_uniform_locations[256][256] = {0};
 
-inline GLint ex_uniform(GLuint shader, const char *str)
+GLint ex_uniform(GLuint shader, const char *str)
 {
   const char *string = str;
   uint32_t key = 5381;

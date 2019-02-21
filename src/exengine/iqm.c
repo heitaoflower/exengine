@@ -36,6 +36,7 @@ ex_model_t *ex_iqm_load_model(ex_scene_t *scene, const char *path, uint8_t flags
   memcpy(&header, data, sizeof(ex_iqm_header_t));
 
   ex_iqmex_mesh_t *meshes = (ex_iqmex_mesh_t *)&data[header.ofs_meshes];
+  ex_iqmex_material_t *materils = (ex_iqmex_material_t*)&data[header.ofs_materials];
   char *file_text = header.ofs_text ? (char *)&data[header.ofs_text] : "";
 
   // set the vertices
@@ -243,13 +244,21 @@ ex_model_t *ex_iqm_load_model(ex_scene_t *scene, const char *path, uint8_t flags
         offset = ind[k];
     }
     index_offset += ++offset;
-
-    // get material and texture names
-    char *tex_name = &file_text[meshes[i].material];
-    char *is_file = strpbrk(tex_name, ".");
     
     // create mesh
     ex_mesh_t *m = ex_mesh_new(vert, meshes[i].num_vertexes, ind, meshes[i].num_triangles*3, 0);
+
+	/* Get material and texture names. */
+	if (meshes[i].materialindex != -1)
+	{
+		ex_iqmex_material_t* material = &materils[meshes[i].materialindex];
+
+		char* texture_diffuse = &file_text[material->textures[IQM_TEXTURE_TYPE_DIFFUSE]];
+		char* texture_specular = &file_text[material->textures[IQM_TEXTURE_TYPE_SPECULAR]];
+
+		if (strcmp(texture_diffuse, "")) { m->texture = ex_cache_texture(texture_diffuse); }
+		if (strcmp(texture_specular, "")) { m->texture = ex_cache_texture(texture_specular); }
+	}
 
     // store vertices
     if (flags & EX_KEEP_VERTICES) {
@@ -259,26 +268,7 @@ ex_model_t *ex_iqm_load_model(ex_scene_t *scene, const char *path, uint8_t flags
       
       vis_len += size;
     }
-
-    // load textures
-    char *tex_types[] = {"spec_", "norm_"};
-    if (is_file != NULL) {
-      // diffuse
-      m->texture = ex_cache_texture(tex_name);
-    
-      // spec
-      char spec[strlen(tex_name)+strlen(tex_types[0])];
-      strcpy(spec, tex_types[0]);
-      strcpy(&spec[strlen(tex_types[0])], tex_name);
-      m->texture_spec = ex_cache_texture(spec);
-
-      // norm
-      char norm[strlen(tex_name)+strlen(tex_types[1])];
-      strcpy(norm, tex_types[1]);
-      strcpy(&norm[strlen(tex_types[1])], tex_name);
-      m->texture_norm = ex_cache_texture(norm);
-    }
-
+	
     // push mesh into mesh list
     ex_model_add_mesh(model, m);
   }

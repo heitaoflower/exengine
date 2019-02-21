@@ -57,9 +57,10 @@ void exengine(char **argv, uint8_t flags)
 
   // load config vars
   uint32_t width = 0, height = 0;
-  width = conf_get_int(&conf, "window_width");
-  height = conf_get_int(&conf, "window_height");
-  
+  /*width = conf_get_int(&conf, "window_width");
+  height = conf_get_int(&conf, "window_height");*/
+  width = 1280;
+  height = 720;
   // init the window and gl
   if (!ex_window_init(width, height, "exengine-testing")) {
     ex_exit_ptr();

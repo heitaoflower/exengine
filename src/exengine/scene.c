@@ -185,8 +185,8 @@ void ex_scene_update(ex_scene_t *s, float delta_time)
 {
   ex_dbgprofiler.begin[ex_dbgprofiler_update] = glfwGetTime();
 
-  if (!s->collision_built)
-    ex_scene_build_collision(s);
+  //if (!s->collision_built)
+    //ex_scene_build_collision(s);
 
   // update models animations etc
   for (int i=0; i<EX_SCENE_MAX_MODELS; i++) {

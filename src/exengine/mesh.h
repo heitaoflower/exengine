@@ -15,7 +15,7 @@
 #define EX_MESH_H
 
 #include "mathlib.h"
-
+#include <inttypes.h>
 #define GLEW_STATIC
 #include <GL/glew.h>
 

@@ -62,7 +62,7 @@ static int conf_load(conf_t *conf, const char *path)
     return 0;
 
   // duplicate buff contents
-  char str[strlen(buff)];
+  char str[255];
   strcpy(str, buff);
 
   // get token count

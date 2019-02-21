@@ -47,6 +47,7 @@ typedef struct {
   uint num_anims, ofs_anims;
   uint num_frames, num_framechannels, ofs_frames, ofs_bounds;
   uint num_comment, ofs_comment;
+  unsigned int num_materials, ofs_materials;
   uint num_extensions, ofs_extensions;
 } ex_iqm_header_t;
 
@@ -69,6 +70,23 @@ enum {
   IQM_FLOAT  = 7,
   IQM_DOUBLE = 8,
   IQM_LOOP   = 1<<0
+};
+
+enum
+{
+	IQM_TEXTURE_TYPE_DIFFUSE = 0x00,
+	IQM_TEXTURE_TYPE_SPECULAR = 0x01,
+	IQM_TEXTURE_TYPE_AMBIENT = 0x02,
+	IQM_TEXTURE_TYPE_EMISSIVE = 0x03,
+	IQM_TEXTURE_TYPE_HEIGHT = 0x04,
+	IQM_TEXTURE_TYPE_NORMALS = 0x05,
+	IQM_TEXTURE_TYPE_SHININESS = 0x06,
+	IQM_TEXTURE_TYPE_OPACITY = 0x07,
+	IQM_TEXTURE_TYPE_DISPLACEMENT = 0x08,
+	IQM_TEXTURE_TYPE_LIGHTMAP = 0x09,
+	IQM_TEXTURE_TYPE_REFLECTION = 0x0A,
+	IQM_TEXTURE_TYPE_COUNT = 0x0B,
+	IQM_TEXTURE_TYPE_NONE = 0xFF,
 };
 
 typedef struct {
@@ -108,9 +126,16 @@ typedef struct {
   float xyradius, radius;
 } ex_iqmbounds_t;
 
+typedef struct 
+{
+	unsigned int name;
+	unsigned int textures[IQM_TEXTURE_TYPE_COUNT];
+} ex_iqmex_material_t;
+
 typedef struct {
   uint name;
   uint material;
+  int materialindex;
   uint first_vertex, num_vertexes;
   uint first_triangle, num_triangles;
 } ex_iqmex_mesh_t;

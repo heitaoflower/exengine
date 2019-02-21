@@ -43,7 +43,7 @@ ex_skybox_t* ex_skybox_new(const char *tex_name)
     char *suffix[6] = {"_right.png", "_left.png",
                        "_top.png",   "_bottom.png",
                        "_back.png",  "_front.png"};
-    char name[strlen(tex_name)+strlen(suffix[i])];
+    char name[255];
 
     // append suffix to texture name
     strcpy(name, tex_name);

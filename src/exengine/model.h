@@ -17,7 +17,7 @@
 #include "octree.h"
 #include "mesh.h"
 
-#define EX_MODEL_MAX_MESHES 128
+#define EX_MODEL_MAX_MESHES 512
 
 typedef struct {
   char name[64];
