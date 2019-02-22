@@ -67,10 +67,10 @@ static int conf_load(conf_t *conf, const char *path)
 
   // get token count
   int t_count = 0;
-  char *token = strtok(str, " \n");
+  char *token = strtok(str, " \r\n");
   while (token) {
     t_count++;
-    token = strtok(NULL, " \n");
+    token = strtok(NULL, " \r\n");
   }
 
   // should be divisible by 2
@@ -88,7 +88,7 @@ static int conf_load(conf_t *conf, const char *path)
   // parse tokens
   int i = 0, t = 0;
   strcpy(str, buff);
-  token = strtok(str, " \t\n");
+  token = strtok(str, " \t\r\n");
   while (token) {
     if (!t) {
       // its a key
@@ -109,7 +109,7 @@ static int conf_load(conf_t *conf, const char *path)
     t = !t;
 
     // get next token
-    token = strtok(NULL, " \t\n");
+    token = strtok(NULL, " \t\r\n");
   }
 
   // woop
